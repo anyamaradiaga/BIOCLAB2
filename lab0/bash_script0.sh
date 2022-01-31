@@ -3,9 +3,8 @@
 #Description: 
 
 #part 3 - intro to bash scripting to count all files/directories
-#use ls to find list of files in directory, then count 1 entry per line and add a to get hidden files as well
-#and pipe it to the wc command to count number of files. 
-#ls -A | wc -l
+#use find command to get to home directory, then specify that you only want files (including hidden)
+#and pipe it to the wc command to count number of files with 1 entry per line. 
 
 find $HOME -type f | wc -l
 
