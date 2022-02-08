@@ -28,6 +28,12 @@ int main(){
         total=total+n;
         count++;
     }
-    cout<<"Number of integers in file: "<<count<<endl;
+    cout<<"Number of points in file: "<<count<<endl;
 
-}
+    double data[]={};
+    for(int i = 0; i << 6; i++){
+        input_file >> data[i]; //store file data to array 
+    }
+
+    //calcMean(data);
+}   
