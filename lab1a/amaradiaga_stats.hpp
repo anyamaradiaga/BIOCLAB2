@@ -10,6 +10,7 @@ Description:
 #include <stdio.h>
 #include <cstdlib>
 #include <cstdio> 
+#include <cstring> 
 #include <stdlib.h>
 #include <iostream>  
 #include <fstream>
@@ -20,15 +21,15 @@ using namespace std; //used for cout, min, max arrays...
 //using namespace myclass max; and define in cpp
 
 //max function definition. 
-double calcMax(double array[]);
+double calcMax(vector<double>& vect);
 //min function definition.
-double calcMin(double array[]);
+double calcMin(vector<double>& vect);
 //mean function definition. 
-float calcMean(double array[]);
+float calcMean(vector<double>& vect);
 //standard deviation function definition.
-double calcSd(double array[]);
+double calcSd(vector<double>& vect);
 //histogram function definition
-double calcHist(double array[]);
+double calcHist(vector<double>& vect);
 
 
 #endif 

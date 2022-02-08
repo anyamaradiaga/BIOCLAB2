@@ -1,17 +1,19 @@
 /*
 Name: Anya Maradiaga
 Date: 02/01/22
-Description:
+Description: The following file tests the functions from amaradiaga_stats.cpp 
 */
 #include "amaradiaga_stats.hpp"
+#include "amaradiaga_stats.cpp"
 
 int main(){
     //should expect input argument with path of input data file.
     string filename;
     ifstream input_file;
     int n, total=0, count=0; 
-    cout << "Enter the filename: ";
+    cout << "Enter the filename: " << endl;
     cin >> filename;
+    filename.append(".txt");
     input_file.open( filename.c_str() );
 
     //checks that all data points are read properly
@@ -30,10 +32,28 @@ int main(){
     }
     cout<<"Number of points in file: "<<count<<endl;
 
-    double data[]={};
-    for(int i = 0; i << 6; i++){
+    vector<double>data;
+    for(int i = 0; i << input_file.eof(); i++){
         input_file >> data[i]; //store file data to array 
     }
 
-    //calcMean(data);
+    //find mean and then output 
+    Mean cmean; 
+    double mean = cmean.calcMean(data);
+    cout <<"Mean: "<<mean;
+
+    //find standard deviation
+    //Std cstd;
+    //double std = cstd.calcSd(data); 
+    //cout <<"Standard Deviation: "<<std;
+
+    //Find max
+    //Max cmax; 
+    //double max = cmax.calcMax(data);
+
+    //Find min
+    //Min cmin; 
+    //min = cmin.calcMin(data); 
+
+    //Output Histogram
 }   

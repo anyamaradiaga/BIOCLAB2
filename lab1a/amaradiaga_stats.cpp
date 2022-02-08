@@ -13,15 +13,15 @@ using namespace std;
 
 class Max{
 	public:
-double calcMax(double array[])
+double calcMax(vector<double>& vect)
 {
 	int i;
-	double max = array[0];
-	for (i = 0; i < sizeof(array); i++) 
+	double max = vect[0];
+	for (i = 0; i < sizeof(vect); i++) 
 	{
-		if (array[i] > max)
+		if (vect[i] > max)
 		{
-			max = array[i];
+			max = vect[i];
 		}
 	}
 	return(max);
@@ -32,15 +32,15 @@ double calcMax(double array[])
 //calculating the minimum
 class Min{
 	public:
-double calcMin(double array[])
+double calcMin(vector<double>& vect)
 {
 	int i;
-	double min = array[0];
-	for (i = 0; i < sizeof(array); i++) //going through every row
+	double min = vect[0];
+	for (i = 0; i < sizeof(vect); i++) //going through every row
 	{
-		if (array[i] < min)
+		if (vect[i] < min)
 		{
-			min = array[i];
+			min = vect[i];
 		}
 	}
 	return(min);
@@ -50,15 +50,15 @@ double calcMin(double array[])
 class Mean{
 	public:
 //calculate the mean 
-float calcMean(double array[])
+float calcMean(vector<double>& vect)
 {
 	double mean = 0;
 	int i;
-	for (i = 0; i < sizeof(array); i++) //going through every row
+	for (i = 0; i < sizeof(vect); i++) //going through every row
 	{
-		mean += array[i];
+		mean += vect[i];
 	}
-	mean = mean / sizeof(array);
+	mean = mean / sizeof(vect);
 	return(mean);
 }
 };
@@ -66,37 +66,39 @@ float calcMean(double array[])
 class Std{
 	public:
 //calculating the standard deviation
-double calcSd(double array[]) {
+double calcSd(vector<double>& vect) {
+//double calcSd(double array[]) {
 	int i;
 	float result = 0.0;
 	Mean calc; //create instance of mean class
-	float m = calc.calcMean(array);
-	for (i = 0; i < sizeof(array); i++)
+	float m = calc.calcMean(vect);
+	for (i = 0; i < sizeof(vect); i++)
 	{
-		result += pow((array[i] - m), 2);
+		result += pow((vect[i] - m), 2);
 	}
-	return sqrt(result / sizeof(array)); //return the standard deviation
+	return sqrt(result / sizeof(vect)); //return the standard deviation
 }
 };
 
 class Histogram{
 	public:
-	double calcHist(double array[]){ //input array
+	double calcHist(vector<double>& vect){
+	//double calcHist(double array[]){ //input array
 		//bin center should be at the mean
 		Mean calc; //create instance of mean class
-		double bin_center[] = {calc.calcMean(array)};
+		double bin_center[] = {calc.calcMean(vect)};
 
 		//find max of data
 		Max calc_max;
-		double max = calc_max.calcMax(array);
+		double max = calc_max.calcMax(vect);
 
 		//find min of data
 		Min calc_min; 
-		double min = calc_min.calcMin(array); 
+		double min = calc_min.calcMin(vect); 
 
 		//get standard deviation
 		Std calc_std; 
-		double std = calc_std.calcSd(array);
+		double std = calc_std.calcSd(vect);
 
 		//each bin should have a width of 0.4*sample standard deviation
 		double bin_width = 0.4 * std; 
@@ -117,9 +119,9 @@ class Histogram{
 
 		double count_array[]={}; //count array for histogram
 		double count=0; 
-		for(int i=0; i<= sizeof(array);i++){
+		for(int i=0; i<= sizeof(vect);i++){
 			for( int j=bin_start; j<=bin_end; j++){
-				if(array[i] < binedge[j + 1] && binedge[j] <= array[i]){
+				if(vect[i] < binedge[j + 1] && binedge[j] <= vect[i]){
 					count ++;
 				}
 			}
