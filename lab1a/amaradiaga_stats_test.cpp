@@ -4,15 +4,15 @@ Date: 02/01/22
 Description: The following file tests the functions from amaradiaga_stats.cpp 
 */
 #include "amaradiaga_stats.hpp"
-#include "amaradiaga_stats.cpp"
+//#include "amaradiaga_stats.cpp"
 
 int main(){
     //should expect input argument with path of input data file.
-    string filename;
-    ifstream input_file;
-    int n, total=0, count=0; 
-    cout << "Enter the filename: " << endl;
-    cin >> filename;
+    std::ifstream input_file;
+    
+    std::cout << "Enter the filename: " << endl;
+    std::string filename;
+    std::cin >> filename;
     filename.append(".txt");
     input_file.open( filename.c_str() );
 
@@ -25,6 +25,7 @@ int main(){
     }
 
     //show number of points being analyzed: 
+    int n, total=0, count=0; 
     while ( !input_file.eof()){
         input_file>>n;
         total=total+n;
@@ -38,9 +39,9 @@ int main(){
     }
 
     //find mean and then output 
-    Mean cmean; 
-    double mean = cmean.calcMean(data);
-    cout <<"Mean: "<<mean;
+    //Mean_Space::My_MeanSpace:: Mean cmean; 
+    //double mean = cmean.calcMean(data);
+    //cout <<"Mean: "<<mean;
 
     //find standard deviation
     //Std cstd;
