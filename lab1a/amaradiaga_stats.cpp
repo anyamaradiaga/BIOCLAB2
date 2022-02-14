@@ -9,95 +9,91 @@ Description:
 //then constructor
 //calculating the maximum
 
-using namespace std;
-
-class Max{
-	public:
-double calcMax(vector<double>& vect)
-{
+void MySpace::MyClass::calcMean(vector<float>* vect){
+	double m = 0;
 	int i;
-	double max = vect[0];
+	for (i = 0; i < sizeof(vect); i++) //going through every row
+	{
+		m += vect-> at(i);
+	}
+	m = m / sizeof(vect);
+	this -> mean = m;
+
+}
+float MySpace::MyClass::getMean(){
+	return (this-> mean);
+}
+
+void MySpace::MyClass::calcMax(vector<float>* vect){
+	int i;
+	float m = vect->at(0);
 	for (i = 0; i < sizeof(vect); i++) 
 	{
-		if (vect[i] > max)
+		if (vect-> at(i) > m)
 		{
-			max = vect[i];
+			m = vect-> at(i);
 		}
 	}
-	return(max);
+	this -> max = m; 
 }
-};
 
+float MySpace::MyClass::getMax(){
+	return (this-> max);
+}
 
-//calculating the minimum
-class Min{
-	public:
-double calcMin(vector<double>& vect)
-{
+void MySpace::MyClass::calcMin(vector<float>* vect){
 	int i;
-	double min = vect[0];
+	float min_calc = vect->at(0);
 	for (i = 0; i < sizeof(vect); i++) //going through every row
 	{
-		if (vect[i] < min)
+		if (vect-> at(i) < min_calc)
 		{
-			min = vect[i];
+			min_calc = vect-> at(i);
 		}
 	}
-	return(min);
+	this -> min = min_calc; 
 }
-};
 
-class Mean{
-	public:
-//calculate the mean 
-float calcMean(vector<double>& vect)
-{
-	double mean = 0;
-	int i;
-	for (i = 0; i < sizeof(vect); i++) //going through every row
-	{
-		mean += vect[i];
-	}
-	mean = mean / sizeof(vect);
-	return(mean);
+float MySpace::MyClass::getMin(){
+	return (this-> min);
 }
-};
 
-class Std{
-	public:
-//calculating the standard deviation
-double calcSd(vector<double>& vect) {
-//double calcSd(double array[]) {
+void MySpace::MyClass::calcSd(vector<float>* vect){
 	int i;
 	float result = 0.0;
-	Mean calc; //create instance of mean class
-	float m = calc.calcMean(vect);
+	MySpace::MyClass::calcMean(vect);
+	float m = MySpace::MyClass::getMean(); //create instance of mean class
+	
 	for (i = 0; i < sizeof(vect); i++)
 	{
-		result += pow((vect[i] - m), 2);
+		result += pow((vect-> at(i) - m), 2);
 	}
-	return sqrt(result / sizeof(vect)); //return the standard deviation
-}
-};
 
+	this -> std = sqrt(result / sizeof(vect));
+}
+
+float MySpace::MyClass::getSd(){
+	return (this-> std);
+}
+/*
 class Histogram{
 	public:
 	double calcHist(vector<double>& vect){
 	//double calcHist(double array[]){ //input array
 		//bin center should be at the mean
-		Mean calc; //create instance of mean class
+		Mean_Space::Mean calc; //create instance of mean class
 		double bin_center[] = {calc.calcMean(vect)};
 
 		//find max of data
-		Max calc_max;
+		Max_Space::Max calc_max;
 		double max = calc_max.calcMax(vect);
 
 		//find min of data
-		Min calc_min; 
+		Min_Space::Min calc_min; 
 		double min = calc_min.calcMin(vect); 
 
 		//get standard deviation
-		Std calc_std; 
+		Std_Space::Std calc_std; 
 		double std = calc_std.calcSd(vect);
 
 		//each bin should have a width of 0.4*sample standard deviation
@@ -129,4 +125,4 @@ class Histogram{
 		}
 		return(count);
 	}
-};
+};*/
