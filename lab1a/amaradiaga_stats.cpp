@@ -104,15 +104,15 @@ float MySpace::MyClass::calcHist(vector<float>* vect){
 		//bins should begin and end at sample mean ±3*(sample stddev), respectively.
 		float bin_start = 0.3*std1, bin_end =(-0.3)*std1; 
 
-		vector<float>*binedge;
+		float binedge[]={};
 		//int binedge[]={}; //array for binedge
-		float bin_start = binedge -> at(0); //set the first edge to the bin start
+		float bin_start = binedge[0]; //set the first edge to the bin start
 		for (int i = bin_start; i < bin_end; i++) {
 		binedge[i] = binedge[i - 1] + bin_width;
 		}
 
-		//float bin_center[]={};
-		vector<float>*bin_center;
+		float bin_center[]={};
+		//vector<float>*bin_center;
 		for (int i = 1; i <= bin_end; i++) {
 		bin_center[i] = binedge[i] + ((1.0 / 2.0) * bin_width);
 		}
@@ -121,7 +121,7 @@ float MySpace::MyClass::calcHist(vector<float>* vect){
 		double count=0; 
 		for(int i=0; i<= sizeof(vect);i++){
 			for( int j=bin_start; j<=bin_end; j++){
-				if(vect[i] < binedge[j + 1] && binedge[j] <= vect[i]){
+				if(vect -> at(i) < binedge[j + 1] && binedge[j] <= vect -> at(i)){
 					count ++;
 				}
 			}

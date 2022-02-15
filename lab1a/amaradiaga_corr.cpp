@@ -21,7 +21,8 @@ float MySpace1::MyClass1::CorrelationCalc(vector<float>* vect1, vector<float>* v
     MySpace1::MyClass1 sum; 
 
      //this->
-    float m1,m2,std1,std2, suma; 
+    float m1,m2,std1,std2;
+    float suma = 0.0; 
     // the below is good
     stats.calcMean(vect1); 
     m1 = stats.getMean();  
