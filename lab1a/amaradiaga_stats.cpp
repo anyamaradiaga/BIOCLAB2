@@ -10,7 +10,7 @@ Description:
 //calculating the maximum
 
 void MySpace::MyClass::calcMean(vector<float>* vect){
-	double m = 0;
+	float m = 0.0;
 	int i;
 	for (i = 0; i < sizeof(vect); i++) //going through every row
 	{
@@ -76,35 +76,32 @@ float MySpace::MyClass::getSd(){
 	return (this-> std);
 }
 /*
-class Histogram{
-	public:
-	double calcHist(vector<double>& vect){
-	//double calcHist(double array[]){ //input array
+void MySpace::MyClass::calcHist(vector<float>* vect){
 		//bin center should be at the mean
-		Mean_Space::Mean calc; //create instance of mean class
-		double bin_center[] = {calc.calcMean(vect)};
+		MySpace::MyClass::calcMean(vect);
+	    float m = MySpace::MyClass::getMean(); 
 
 		//find max of data
-		Max_Space::Max calc_max;
-		double max = calc_max.calcMax(vect);
+		MySpace::MyClass::calcMax(vect);
+		float max1 = MySpace::MyClass::getMax();
 
 		//find min of data
-		Min_Space::Min calc_min; 
-		double min = calc_min.calcMin(vect); 
+		MySpace::MyClass::calcMin(vect);
+		float min1 = MySpace::MyClass::getMin();
 
 		//get standard deviation
-		Std_Space::Std calc_std; 
-		double std = calc_std.calcSd(vect);
+		MySpace::MyClass::calcSd(vect);
+		float std1 = MySpace::MyClass::getSd();
 
 		//each bin should have a width of 0.4*sample standard deviation
-		double bin_width = 0.4 * std; 
+		float bin_width = 0.4 * std1; 
 
 		//bins should begin and end at sample mean ±3*(sample stddev), respectively.
-		double bin_start = 0.3*std, bin_end =(-0.3)*std; 
+		float bin_start = 0.3*std1, bin_end =(-0.3)*std1; 
 
-		//vector<int>binedge;
-		int binedge[]={}; //array for binedge
-		binedge[0]=bin_start; //set the first edge to the bin start
+		vector<float>*binedge;
+		//int binedge[]={}; //array for binedge
+		float bin_start = binedge -> at(0); //set the first edge to the bin start
 		for (int i = bin_start; i < bin_end; i++) {
 		binedge[i] = binedge[i - 1] + bin_width;
 		}
