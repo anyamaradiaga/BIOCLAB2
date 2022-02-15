@@ -38,23 +38,4 @@ int main(){
         input_file >> data[i]; //store file data to array 
     }
 
-    //find mean and then output 
-    //Mean_Space::My_MeanSpace:: Mean cmean; 
-    //double mean = cmean.calcMean(data);
-    //cout <<"Mean: "<<mean;
-
-    //find standard deviation
-    //Std cstd;
-    //double std = cstd.calcSd(data); 
-    //cout <<"Standard Deviation: "<<std;
-
-    //Find max
-    //Max cmax; 
-    //double max = cmax.calcMax(data);
-
-    //Find min
-    //Min cmin; 
-    //min = cmin.calcMin(data); 
-
-    //Output Histogram
 }   

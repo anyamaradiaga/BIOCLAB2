@@ -9,7 +9,7 @@ Description:
 //then constructor
 //calculating the maximum
 
-void MySpace::MyClass::calcMean(vector<float>* vect){
+float MySpace::MyClass::calcMean(vector<float>* vect){
 	float m = 0.0;
 	int i;
 	for (i = 0; i < sizeof(vect); i++) //going through every row
@@ -18,13 +18,14 @@ void MySpace::MyClass::calcMean(vector<float>* vect){
 	}
 	m = m / sizeof(vect);
 	this -> mean = m;
+	return m;
 
 }
 float MySpace::MyClass::getMean(){
 	return (this-> mean);
 }
 
-void MySpace::MyClass::calcMax(vector<float>* vect){
+float MySpace::MyClass::calcMax(vector<float>* vect){
 	int i;
 	float m = vect->at(0);
 	for (i = 0; i < sizeof(vect); i++) 
@@ -35,13 +36,14 @@ void MySpace::MyClass::calcMax(vector<float>* vect){
 		}
 	}
 	this -> max = m; 
+	return m; 
 }
 
 float MySpace::MyClass::getMax(){
 	return (this-> max);
 }
 
-void MySpace::MyClass::calcMin(vector<float>* vect){
+float MySpace::MyClass::calcMin(vector<float>* vect){
 	int i;
 	float min_calc = vect->at(0);
 	for (i = 0; i < sizeof(vect); i++) //going through every row
@@ -52,17 +54,18 @@ void MySpace::MyClass::calcMin(vector<float>* vect){
 		}
 	}
 	this -> min = min_calc; 
+	return min_calc; 
 }
 
 float MySpace::MyClass::getMin(){
 	return (this-> min);
 }
 
-void MySpace::MyClass::calcSd(vector<float>* vect){
+float MySpace::MyClass::calcSd(vector<float>* vect){
 	int i;
 	float result = 0.0;
-	MySpace::MyClass::calcMean(vect);
-	float m = MySpace::MyClass::getMean(); //create instance of mean class
+	
+	float m = this->calcMean(vect); //create instance of mean class
 	
 	for (i = 0; i < sizeof(vect); i++)
 	{
@@ -70,28 +73,30 @@ void MySpace::MyClass::calcSd(vector<float>* vect){
 	}
 
 	this -> std = sqrt(result / sizeof(vect));
+	return std;
 }
 
 float MySpace::MyClass::getSd(){
 	return (this-> std);
 }
-/*
-void MySpace::MyClass::calcHist(vector<float>* vect){
-		//bin center should be at the mean
-		MySpace::MyClass::calcMean(vect);
-	    float m = MySpace::MyClass::getMean(); 
 
+float MySpace::MyClass::calcHist(vector<float>* vect){
+		//bin center should be at the mean
+		
+	    float m = this->calcMean(vect); 
+		
 		//find max of data
-		MySpace::MyClass::calcMax(vect);
-		float max1 = MySpace::MyClass::getMax();
+		//MySpace::MyClass::calcMax(vect);
+		//float max1 = MySpace::MyClass::getMax();
+		float max1 = this->calcMax(vect);
 
 		//find min of data
-		MySpace::MyClass::calcMin(vect);
-		float min1 = MySpace::MyClass::getMin();
+		//MySpace::MyClass::calcMin(vect);
+		float min1 =this-> calcMin(vect); 
 
 		//get standard deviation
-		MySpace::MyClass::calcSd(vect);
-		float std1 = MySpace::MyClass::getSd();
+		//MySpace::MyClass::calcSd(vect);
+		float std1 = this -> calcSd(vect);
 
 		//each bin should have a width of 0.4*sample standard deviation
 		float bin_width = 0.4 * std1; 
@@ -106,6 +111,8 @@ void MySpace::MyClass::calcHist(vector<float>* vect){
 		binedge[i] = binedge[i - 1] + bin_width;
 		}
 
+		//float bin_center[]={};
+		vector<float>*bin_center;
 		for (int i = 1; i <= bin_end; i++) {
 		bin_center[i] = binedge[i] + ((1.0 / 2.0) * bin_width);
 		}
@@ -122,4 +129,3 @@ void MySpace::MyClass::calcHist(vector<float>* vect){
 		}
 		return(count);
 	}
-};*/

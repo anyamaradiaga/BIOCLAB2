@@ -25,16 +25,15 @@ using namespace std; //used for cout, min, max arrays...
 namespace MySpace{
     class MyClass{
         public: 
-            void calcMean(vector<float>* vect);
+            float calcMean(vector<float>* vect);
             float getMean();
-            void calcMin(vector<float>* vect);
+            float calcMin(vector<float>* vect);
             float getMin();
-            void calcMax(vector<float>* vect);
+            float calcMax(vector<float>* vect);
             float getMax();
-            void calcSd(vector<float>* vect);
+            float calcSd(vector<float>* vect);
             float getSd();
-            
-            void calcHist(vector<float>* vect);
+            float calcHist(vector<float>* vect);
         private:
             //where variables get listed
             float mean; 
@@ -45,16 +44,14 @@ namespace MySpace{
 };
 }
 
-
-
 //min function definition.
-double calcMin(vector<double>& vect);
+float calcMin(vector<float>* vect);
 //mean function definition. 
-float calcMean(vector<double>& vect);
+float calcMean(vector<float>* vect);
 //standard deviation function definition.
-double calcSd(vector<double>& vect);
+float calcSd(vector<float>* vect);
 //histogram function definition
-double calcHist(vector<double>& vect);
+float calcHist(vector<float>* vect);
 
 
 #endif 
