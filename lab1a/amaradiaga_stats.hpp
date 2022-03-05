@@ -25,7 +25,7 @@ using namespace std; //used for cout, min, max arrays...
 namespace MySpace{
     class MyClass{
         public: 
-            float calcMean(vector<float>* vect);
+            float calcMean(vector<float> vect);
             float getMean();
             float calcMin(vector<float>* vect);
             float getMin();
@@ -33,13 +33,15 @@ namespace MySpace{
             float getMax();
             float calcSd(vector<float>* vect);
             float getSd();
-            float calcHist(vector<float>* vect);
+            void calcHist(vector<float> vect);
         private:
             //where variables get listed
             float mean; 
             float min; 
             float max; 
             float std;
+            vector<float> buckets;
+            vector<float> bucket_vals;
 
 };
 }

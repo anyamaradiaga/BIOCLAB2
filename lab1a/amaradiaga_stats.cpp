@@ -9,16 +9,16 @@ Description:
 //then constructor
 //calculating the maximum
 
-float MySpace::MyClass::calcMean(vector<float>* vect){
-	float m = 0.0;
-	int i;
-	for (i = 0; i < sizeof(vect); i++) //going through every row
-	{
-		m += vect-> at(i);
-	}
-	m = m / sizeof(vect);
-	this -> mean = m;
-	return m;
+float MySpace::MyClass::calcMean(vector<float> vect){
+    int index= vect.size();     
+    int i=0;
+    float sum=0;
+    while(i<index){             
+        sum=sum+vect[i];
+        i++;
+    }
+    float answer=sum/index;
+    this->mean=answer;        
 
 }
 float MySpace::MyClass::getMean(){
@@ -61,71 +61,44 @@ float MySpace::MyClass::getMin(){
 	return (this-> min);
 }
 
-float MySpace::MyClass::calcSd(vector<float>* vect){
-	int i;
-	float result = 0.0;
-	
-	float m = this->calcMean(vect); //create instance of mean class
-	
-	for (i = 0; i < sizeof(vect); i++)
-	{
-		result += pow((vect-> at(i) - m), 2);
-	}
 
-	this -> std = sqrt(result / sizeof(vect));
-	return std;
-}
 
-float MySpace::MyClass::getSd(){
-	return (this-> std);
-}
+void MySpace::MyClass::calcHist(vector<float> vect){
 
-float MySpace::MyClass::calcHist(vector<float>* vect){
-		//bin center should be at the mean
-		
-	    float m = this->calcMean(vect); 
-		
-		//find max of data
-		//MySpace::MyClass::calcMax(vect);
-		//float max1 = MySpace::MyClass::getMax();
-		float max1 = this->calcMax(vect);
+    float maximum = 0, minimum = 10000;
+    int j = 0;
 
-		//find min of data
-		//MySpace::MyClass::calcMin(vect);
-		float min1 =this-> calcMin(vect); 
+    float width = 0.4*(this->std); 
+    float upperbound = this->mean+( 3*(this->std)); 
+    float lowerbound= this->mean-(3*(this->std));
+    float indexer=upperbound-width;                 
+    int i=1;
 
-		//get standard deviation
-		//MySpace::MyClass::calcSd(vect);
-		float std1 = this -> calcSd(vect);
+        this->buckets.insert(buckets.begin(), upperbound);  
 
-		//each bin should have a width of 0.4*sample standard deviation
-		float bin_width = 0.4 * std1; 
+    while(indexer>lowerbound){     
+        vector<float>::iterator testing= this->buckets.insert(buckets.begin(),1, indexer);
+        indexer=indexer-width;
+        i++;
+        
 
-		//bins should begin and end at sample mean ±3*(sample stddev), respectively.
-		float bin_start = 0.3*std1, bin_end =(-0.3)*std1; 
+    }
+    
+    int arr[buckets.size()];    
+    for(int j=0; j<this->buckets.size(); j++){      
+        arr[j]=0;
+    }
+    for(int i=0; i<vect.size();i++){                    
+        for(int j=0; j<this->buckets.size(); j++){
+            if(vect[i]>=this->buckets[j]){          
+                if(vect[i]<this->buckets[j+1]){     
+                    arr[j]++;                          
+                }
+            }
+        }
+    }
 
-		float binedge[]={};
-		//int binedge[]={}; //array for binedge
-		float bin_start = binedge[0]; //set the first edge to the bin start
-		for (int i = bin_start; i < bin_end; i++) {
-		binedge[i] = binedge[i - 1] + bin_width;
-		}
-
-		float bin_center[]={};
-		//vector<float>*bin_center;
-		for (int i = 1; i <= bin_end; i++) {
-		bin_center[i] = binedge[i] + ((1.0 / 2.0) * bin_width);
-		}
-
-		double count_array[]={}; //count array for histogram
-		double count=0; 
-		for(int i=0; i<= sizeof(vect);i++){
-			for( int j=bin_start; j<=bin_end; j++){
-				if(vect -> at(i) < binedge[j + 1] && binedge[j] <= vect -> at(i)){
-					count ++;
-				}
-			}
-			count_array[i] = count; //array that stores the count total
-		}
-		return(count);
+    for(int i=0;i<buckets.size();i++){
+        vector<float>::iterator testing2= this->bucket_vals.insert(bucket_vals.begin(),1, arr[i]);    
+    }   
 	}

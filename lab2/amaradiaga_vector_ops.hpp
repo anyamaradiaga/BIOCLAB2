@@ -12,6 +12,7 @@ Description:
 #include <fstream>
 #include <cmath>
 #include <vector>
+#include<algorithm>
 #include <array>
 #include <iostream>  
 using namespace std; 
