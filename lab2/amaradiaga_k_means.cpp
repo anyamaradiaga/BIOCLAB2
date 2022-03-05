@@ -1,3 +1,11 @@
+/*
+-------------------------------------------------------
+- Name: Anya Maradiaga 
+- Due Date: March 4, 2022
+- Description: This file contains clustering techniques
+-------------------------------------------------------
+*/
+
 #include "amaradiaga_stats.hpp"
 #include "amaradiaga_vector_ops.hpp"
 #include "amaradiaga_pre_processing.hpp"
@@ -9,8 +17,8 @@
 #include <iterator>
 #include <vector>
 
-std::ifstream FILE_1, FILE_2;
-std::ofstream expressed_file, suppressed_file, stationary_file; 
+std::ifstream FILE_1, FILE_2; //for the two files
+std::ofstream expressed_file, suppressed_file, stationary_file; //define the output variables for files
 
 kMean::cluster::cluster(){
     this->name;
@@ -49,9 +57,12 @@ int main(int argc, char** argv){
 
     std::string log_ratio_file, gene_list_file; 
     kMean::cluster expressed_cluster, stationary_cluster, suppressed_cluster; 
+
+    /*--------------------------------*/
     float suppressed_cluster_mean= -0.5; 
     float stationary_cluster_mean=  0;
     float expressed_cluster_mean=  0.5;
+    /*--------------------------------*/
 
     gene_list_file="gene_list.txt"; 
 
@@ -65,9 +76,9 @@ int main(int argc, char** argv){
     FILE_1.open(log_ratio_file);      
     FILE_2.open(gene_list_file);
 
-    if((FILE_1.is_open())&&(FILE_2.is_open())){ 
-        std::istream_iterator<float> start_file1(FILE_1), end1;   
-        std::vector<float> data_file1(start_file1, end1);
+    if((FILE_1.is_open())&&(FILE_2.is_open())){ //correct way to check if file is opened
+        std::istream_iterator<float> start_file1(FILE_1), end1;   //iterator helps get data from files
+        std::vector<float> data_file1(start_file1, end1); 
         std::istream_iterator<std::string> start_file2(FILE_2), end2;   
         std::vector<std::string> data_file2(start_file2, end2);
 
@@ -79,16 +90,21 @@ int main(int argc, char** argv){
         float criteria=1;
 
         while(criteria>0.0001){
+            //clearing clusters
             cluster_1.clear(), cluster_2.clear(), cluster_3.clear(), expressed.clear(), stationary.clear(), suppressed.clear();
-            for(int j=0;j<data_file1.size();j++){  
+            for(int j=0;j<data_file1.size();j++){
+                
+                /*expressed lot*/
                 expressed_cluster.set_cluster_mean(expressed_cluster_mean);         
                 expressed_cluster.set_distance(data_file1[j]);
                 expressed_distance = expressed_cluster.get_distance();
 
+                /*stationary lot*/
                 stationary_cluster.set_cluster_mean(stationary_cluster_mean);        
                 stationary_cluster.set_distance(data_file1[j]);
                 stationary_distance = stationary_cluster.get_distance();
 
+                /*suppressed lot*/
                 suppressed_cluster.set_cluster_mean(suppressed_cluster_mean);        
                 suppressed_cluster.set_distance(data_file1[j]);
                 suppressed_distance = suppressed_cluster.get_distance();
@@ -97,19 +113,17 @@ int main(int argc, char** argv){
                     if(cluster_1.size()==0){
                         cluster_1.insert(cluster_1.begin(), data_file1[j]);
                         suppressed.insert(suppressed.begin(),j);
-                        //printf("**SORT1: **\n");
                     }
                     else{
                         vector<float>::iterator testing1= cluster_1.insert(cluster_1.end(), 1, data_file1[j]);    
                         vector<float>::iterator testing4= suppressed.insert(suppressed.end(), 1, j);    
-
                     }
+
                 }
                 else if((stationary_distance<=suppressed_distance)&&(stationary_distance<=expressed_distance)){     
                     if(cluster_2.size()==0){ 
                         cluster_2.insert(cluster_2.begin(), data_file1[j]);
                         stationary.insert(stationary.begin(),j);
-                        //printf("**SORT2: **\n");
                     }
                     else{
                         vector<float>::iterator testing2 = cluster_2.insert(cluster_2.end(), 1, data_file1[j]);    
@@ -128,15 +142,16 @@ int main(int argc, char** argv){
                         vector<float>::iterator testing6 = expressed.insert(expressed.end(), 1, j);    
                     }
                 }  
-                
             }
 
+            /*------------------------------*/
             calc.calcMean(cluster_1);
             new_cluster_mean1 = calc.getMean();
             calc.calcMean(cluster_2);
             new_cluster_mean2 = calc.getMean();
             calc.calcMean(cluster_3);
             new_cluster_mean3 = calc.getMean();
+            /*------------------------------*/
 
             criteria = abs(suppressed_cluster_mean - new_cluster_mean1) + abs(stationary_cluster_mean - new_cluster_mean2) + abs(expressed_cluster_mean - new_cluster_mean3);
                     
@@ -144,12 +159,14 @@ int main(int argc, char** argv){
             stationary_cluster_mean = new_cluster_mean2;
             suppressed_cluster_mean = new_cluster_mean1; 
         }
+
         /* ----------------------------------------------------------------- */
         printf("***Expressed Cluster Mean: %f***\n", expressed_cluster_mean);
         printf("***Stationary Cluster Mean: %f***\n", stationary_cluster_mean); 
         printf("***Suppressed Cluster Mean: %f***\n", suppressed_cluster_mean);    
         /* ----------------------------------------------------------------- */
 
+        //opened file for writing 
         expressed_file.open("expressed_genes.txt");
         stationary_file.open("stationary_genes.txt");
         suppressed_file.open("suppressed_genes.txt");
@@ -171,12 +188,14 @@ int main(int argc, char** argv){
             }
         }
 
+        //close all files
         expressed_file.close();    
         suppressed_file.close();
         stationary_file.close();
-        
 
     }
+
+    //cant open?---
     else{                           
         if(!(FILE_1.is_open())){                               
             std::cout<<"**NO DAT FILE!**\n";

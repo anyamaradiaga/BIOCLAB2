@@ -1,4 +1,9 @@
 #!/bin/sh
+#------------------------------------------------------------------------------------------------------------
+# Name: Anya Maradiaga 
+# Due Date: March 4, 2022
+# Description: This file contains the script to help the user probe the expression sequence of specified gene
+#------------------------------------------------------------------------------------------------------------
 
 echo "hello please select gene: "
 

@@ -1,3 +1,11 @@
+/*
+------------------------------------------------------------------------
+- Name: Anya Maradiaga 
+- Due Date: March 4, 2022
+- Description: This is the header file for clustering/distance functions 
+------------------------------------------------------------------------
+*/
+
 #ifndef MY_HEADER_KM
 #define MY_HEADER_KM
 

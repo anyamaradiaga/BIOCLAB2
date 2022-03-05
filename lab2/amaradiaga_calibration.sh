@@ -1,4 +1,9 @@
 #!/bin/sh
+#--------------------------------------------------------------------------------
+# Name: Anya Maradiaga 
+# Due Date: March 4, 2022
+# Description: This file contains calibration and cluster for the microarray data
+#--------------------------------------------------------------------------------
 
 #take in user input...
 echo "Please select time points [0-6]: "
