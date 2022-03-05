@@ -20,27 +20,29 @@
 std::ifstream FILE_1, FILE_2; //for the two files
 std::ofstream expressed_file, suppressed_file, stationary_file; //define the output variables for files
 
-kMean::cluster::cluster(){
-    this->name;
-    this->mean=0;
-    this->distance=0;
-    this->cluster_data;
+kMean::cluster::cluster(string nameInput, float meanInput){
+    this->name = nameInput;
+    this->mean = meanInput;
 }
 
-void kMean::cluster::set_cluster_mean(float data){
-    this->mean=data;
+void kMean::cluster::set_cluster_mean(vector<float> data){
+    float mean = 0;
+    float sum = 0;
+    float size = data.size();
+    for (int i = 0; i < size; i++) {
+        sum+= data[i];
+    }
+    this->mean = sum / size;
 }
 
 float kMean::cluster::get_cluster_mean(){
     return this->mean;
 }
 
-void kMean::cluster::set_distance(float data){
-    this->distance= abs(data - this->mean);
-}
-
-float kMean::cluster::get_distance(){
-    return this->distance;
+float kMean::cluster::set_distance(float data){
+    float dist = 0;
+    dist = fabs(data- this->mean);
+    return dist;
 }
 
 void kMean::cluster::set_name(std::string name1){
@@ -53,156 +55,102 @@ std::string kMean::cluster::get_name(){
 }
 
 int main(int argc, char** argv){
-    MySpace::MyClass calc; 
+    vector<float> cluster1_data, cluster2_data, cluster3_data, data;
+    float criteria, temp;
 
-    std::string log_ratio_file, gene_list_file; 
-    kMean::cluster expressed_cluster, stationary_cluster, suppressed_cluster; 
+    ifstream file1("intensity_0.dat"); //file that contains the data for red sporulating cells
 
     /*--------------------------------*/
-    float suppressed_cluster_mean= -0.5; 
-    float stationary_cluster_mean=  0;
-    float expressed_cluster_mean=  0.5;
+    kMean::cluster cluster_1("suppressed", -0.5);
+    kMean::cluster cluster_2("stationary", 0.0);
+    kMean::cluster cluster_3("expressed", 0.5);
     /*--------------------------------*/
 
-    gene_list_file="gene_list.txt"; 
-
-    if(argv[1]!=NULL){
-        log_ratio_file=argv[1];
+    float temp;
+    while (file1 >> temp) { // fill vector from file
+		data.push_back(temp);
     }
-    else{
-        std::cout<<"***No input file!***\n";
-            return 1;
-    }  
-    FILE_1.open(log_ratio_file);      
-    FILE_2.open(gene_list_file);
+    file1.close();
 
-    if((FILE_1.is_open())&&(FILE_2.is_open())){ //correct way to check if file is opened
-        std::istream_iterator<float> start_file1(FILE_1), end1;   //iterator helps get data from files
-        std::vector<float> data_file1(start_file1, end1); 
-        std::istream_iterator<std::string> start_file2(FILE_2), end2;   
-        std::vector<std::string> data_file2(start_file2, end2);
+     do {
+        // fill clusters
+        for (int i = 0; i < data.size(); i++) {
+            // calculate distance from point to each cluster mean
+            float d1 = cluster_1.set_distance(data[i]);
+            float d2 = cluster_2.set_distance(data[i]);
+            float d3 = cluster_3.set_distance(data[i]);
 
-        std::vector<float> cluster_1, cluster_2, cluster_3;
-        std::vector<float> expressed, stationary, suppressed;
-
-        float expressed_distance, stationary_distance, suppressed_distance;
-        float new_cluster_mean1, new_cluster_mean2, new_cluster_mean3;
-        float criteria=1;
-
-        while(criteria>0.0001){
-            //clearing clusters
-            cluster_1.clear(), cluster_2.clear(), cluster_3.clear(), expressed.clear(), stationary.clear(), suppressed.clear();
-            for(int j=0;j<data_file1.size();j++){
-                
-                /*expressed lot*/
-                expressed_cluster.set_cluster_mean(expressed_cluster_mean);         
-                expressed_cluster.set_distance(data_file1[j]);
-                expressed_distance = expressed_cluster.get_distance();
-
-                /*stationary lot*/
-                stationary_cluster.set_cluster_mean(stationary_cluster_mean);        
-                stationary_cluster.set_distance(data_file1[j]);
-                stationary_distance = stationary_cluster.get_distance();
-
-                /*suppressed lot*/
-                suppressed_cluster.set_cluster_mean(suppressed_cluster_mean);        
-                suppressed_cluster.set_distance(data_file1[j]);
-                suppressed_distance = suppressed_cluster.get_distance();
-
-                if((suppressed_distance<stationary_distance)&&(suppressed_distance<expressed_distance)){    
-                    if(cluster_1.size()==0){
-                        cluster_1.insert(cluster_1.begin(), data_file1[j]);
-                        suppressed.insert(suppressed.begin(),j);
-                    }
-                    else{
-                        vector<float>::iterator testing1= cluster_1.insert(cluster_1.end(), 1, data_file1[j]);    
-                        vector<float>::iterator testing4= suppressed.insert(suppressed.end(), 1, j);    
-                    }
-
-                }
-                else if((stationary_distance<=suppressed_distance)&&(stationary_distance<=expressed_distance)){     
-                    if(cluster_2.size()==0){ 
-                        cluster_2.insert(cluster_2.begin(), data_file1[j]);
-                        stationary.insert(stationary.begin(),j);
-                    }
-                    else{
-                        vector<float>::iterator testing2 = cluster_2.insert(cluster_2.end(), 1, data_file1[j]);    
-                        vector<float>::iterator testing5 = stationary.insert(stationary.end(), 1, j);    
-
-                    }
-                }
-                else{
-                    if(cluster_3.size()==0){                                 
-                        cluster_3.insert(cluster_3.begin(), data_file1[j]);             
-                        expressed.insert(expressed.begin(),j);                            
-                        //printf("**SORT3: **\n");
-                    }
-                    else{
-                        vector<float>::iterator testing3 = cluster_3.insert(cluster_3.end(), 1, data_file1[j]);    
-                        vector<float>::iterator testing6 = expressed.insert(expressed.end(), 1, j);    
-                    }
-                }  
+            // assign each point to the appropriate cluster
+            if ((d1 <= d2) && (d1 <= d3)) {
+                cluster1_data.push_back(data[i]);
             }
-
-            /*------------------------------*/
-            calc.calcMean(cluster_1);
-            new_cluster_mean1 = calc.getMean();
-            calc.calcMean(cluster_2);
-            new_cluster_mean2 = calc.getMean();
-            calc.calcMean(cluster_3);
-            new_cluster_mean3 = calc.getMean();
-            /*------------------------------*/
-
-            criteria = abs(suppressed_cluster_mean - new_cluster_mean1) + abs(stationary_cluster_mean - new_cluster_mean2) + abs(expressed_cluster_mean - new_cluster_mean3);
-                    
-            expressed_cluster_mean = new_cluster_mean3;
-            stationary_cluster_mean = new_cluster_mean2;
-            suppressed_cluster_mean = new_cluster_mean1; 
+            else if (d2 <= d3) {
+                cluster2_data.push_back(data[i]);
+            }
+            else {
+                cluster3_data.push_back(data[i]);
+            }
         }
 
-        /* ----------------------------------------------------------------- */
-        printf("***Expressed Cluster Mean: %f***\n", expressed_cluster_mean);
-        printf("***Stationary Cluster Mean: %f***\n", stationary_cluster_mean); 
-        printf("***Suppressed Cluster Mean: %f***\n", suppressed_cluster_mean);    
-        /* ----------------------------------------------------------------- */
+        // get old cluster means
+        float old_mean_c1 = cluster_1.get_cluster_mean();
+        float old_mean_c2 = cluster_2.get_cluster_mean();
+        float old_mean_c3 = cluster_3.get_cluster_mean();
 
-        //opened file for writing 
-        expressed_file.open("expressed_genes.txt");
-        stationary_file.open("stationary_genes.txt");
-        suppressed_file.open("suppressed_genes.txt");
+        // set new cluster means using sorted data
+        cluster_1.set_cluster_mean(cluster1_data);
+        cluster_2.set_cluster_mean(cluster2_data);
+        cluster_3.set_cluster_mean(cluster3_data);
 
-        int x=0,y=0, w=0;
+        // calculate the criteria value by comparing the old mean to the new mean
+        criteria = cluster_1.set_distance(old_mean_c1) + cluster_2.set_distance(old_mean_c2) + cluster_3.set_distance(old_mean_c3);
+
+        // remove all data points from each cluster
+        cluster1_data.clear();
+        cluster2_data.clear();
+        cluster3_data.clear();
+
+    } while (criteria > 0.0001);
     
-        for (int z=0; z<data_file1.size(); z++){      
-            if(z==expressed[x]){                
-                expressed_file<<data_file2[z]<<"\n";
-                x++;
+    // open gene_list.txt and create files to write to
+    FILE* gene_list = fopen("gene_list.txt", "r");
+    FILE* expressed = fopen("expressed_genes.txt", "w");
+    FILE* suppressed = fopen("suppressed_genes.txt", "w");
+    FILE* stationary = fopen("stationary_genes.txt", "w");
+    int j = 0;
+
+    if (gene_list != NULL) { // run while gene_list is open
+        char gene[10];
+        while (!feof (gene_list))
+        {
+            // establish values (basically redoing last loop of clustering)
+            float point = data[j];
+            float d1 = cluster_1.set_distance(point);
+            float d2 = cluster_2.set_distance(point);
+            float d3 = cluster_3.set_distance(point);
+            fgets(gene, 10, gene_list); // get gene from gene_list, one line at a time
+        
+            // add gene to appropriate file
+            if (d1 <= d2 && d1 <= d3) {
+                fprintf(suppressed, "%s", gene);
             }
-            else if(z==suppressed[y]){         
-                suppressed_file<<data_file2[z]<<"\n";
-                y++;
+            else if (d2 <= d3) {
+                fprintf(stationary, "%s", gene);
             }
-            else if(z==stationary[w]){          
-                stationary_file<<data_file2[z]<<"\n";
-                w++;
+            else {
+                fprintf(expressed, "%s", gene);
             }
+            j++;  
         }
+        
+        // close all files
+        fclose(gene_list);
+        fclose(suppressed);
+        fclose(stationary);
+        fclose(expressed);
 
-        //close all files
-        expressed_file.close();    
-        suppressed_file.close();
-        stationary_file.close();
-
+        return 0;
     }
-
-    //cant open?---
-    else{                           
-        if(!(FILE_1.is_open())){                               
-            std::cout<<"**NO DAT FILE!**\n";
-            return 1;
-        }
-    }
-    return 0;
 }
 
 

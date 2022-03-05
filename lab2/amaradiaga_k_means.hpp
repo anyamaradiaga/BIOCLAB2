@@ -20,18 +20,19 @@ using std::vector;
 namespace kMean{       
     class cluster{
         public:
-        cluster();
-        void set_name(std::string namer);
-        std::string get_name();
-        float get_cluster_mean();
-        void set_cluster_mean(float data);
-        void set_distance(float data);
-        float get_distance();
-        private:
-        std::string name;
+        cluster(string, float);
+
+        //variables
         float mean;
-        float distance;
+        string name;
         vector<float> cluster_data;
+
+        //functions
+        void set_name(string);
+        string get_name();
+        void set_cluster_mean(vector<float>);
+        float get_cluster_mean();
+        float set_distance(float point);
     };
 }
 
