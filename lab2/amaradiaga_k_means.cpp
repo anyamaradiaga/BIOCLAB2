@@ -73,14 +73,14 @@ int main(int argc, char** argv){
     file1.close();
 
      do {
-        // fill clusters
+        //fill in clusters
         for (int i = 0; i < data.size(); i++) {
-            // calculate distance from point to each cluster mean
+            //get distance from every point in the cluster mean
             float d1 = cluster_1.set_distance(data[i]);
             float d2 = cluster_2.set_distance(data[i]);
             float d3 = cluster_3.set_distance(data[i]);
 
-            // assign each point to the appropriate cluster
+            //assign each point to the appropriate cluster
             if ((d1 <= d2) && (d1 <= d3)) {
                 cluster1_data.push_back(data[i]);
             }
@@ -92,45 +92,45 @@ int main(int argc, char** argv){
             }
         }
 
-        // get old cluster means
+        //get old cluster means
         float old_mean_c1 = cluster_1.get_cluster_mean();
         float old_mean_c2 = cluster_2.get_cluster_mean();
         float old_mean_c3 = cluster_3.get_cluster_mean();
 
-        // set new cluster means using sorted data
+        //new cluster means based of new data
         cluster_1.set_cluster_mean(cluster1_data);
         cluster_2.set_cluster_mean(cluster2_data);
         cluster_3.set_cluster_mean(cluster3_data);
 
-        // calculate the criteria value by comparing the old mean to the new mean
+        //get criteria value by comparing the old mean to the new mean
         criteria = cluster_1.set_distance(old_mean_c1) + cluster_2.set_distance(old_mean_c2) + cluster_3.set_distance(old_mean_c3);
 
-        // remove all data points from each cluster
+        //clear data points from each cluster
         cluster1_data.clear();
         cluster2_data.clear();
         cluster3_data.clear();
 
     } while (criteria > 0.0001);
     
-    // open gene_list.txt and create files to write to
+    //open gene_list.txt and create files to write to
     FILE* gene_list = fopen("gene_list.txt", "r");
     FILE* expressed = fopen("expressed_genes.txt", "w");
     FILE* suppressed = fopen("suppressed_genes.txt", "w");
     FILE* stationary = fopen("stationary_genes.txt", "w");
     int j = 0;
 
-    if (gene_list != NULL) { // run while gene_list is open
+    if (gene_list != NULL) { 
         char gene[10];
         while (!feof (gene_list))
         {
-            // establish values (basically redoing last loop of clustering)
+            //need to reestablish new vals
             float point = data[j];
             float d1 = cluster_1.set_distance(point);
             float d2 = cluster_2.set_distance(point);
             float d3 = cluster_3.set_distance(point);
             fgets(gene, 10, gene_list); // get gene from gene_list, one line at a time
         
-            // add gene to appropriate file
+            //then add the genes to the appropiate files
             if (d1 <= d2 && d1 <= d3) {
                 fprintf(suppressed, "%s", gene);
             }
@@ -143,7 +143,7 @@ int main(int argc, char** argv){
             j++;  
         }
         
-        // close all files
+        //close
         fclose(gene_list);
         fclose(suppressed);
         fclose(stationary);
