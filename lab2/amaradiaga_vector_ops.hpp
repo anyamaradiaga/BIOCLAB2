@@ -17,18 +17,19 @@ Description:
 #include <iostream>  
 using namespace std; 
 
-namespace MyVector{
-    class MyOps{
+namespace MyVectorSpace{
+     class MyOpsClass{
         public:
+        MyOpsClass();
+        MyOpsClass(vector<float>* vect);
+        MyOpsClass(vector<float>*vect1, vector<float>*vect2);
+        MyOpsClass(vector<float>* vect, float k);
+
         float calcSum(vector<float>* vect);
-        float calcSub(vector<float>* vect1,vector<float>* vect2);
-        float calcDiv(vector<float>*vect, int k); //divides all values by a constant K
-        private: 
-        float sub, sum, div; 
+        vector<float> calcSub(vector<float>*vect1, vector<float>*vect2);
+        vector<float> calcDiv(vector<float>* vect, float k);
+
     };
 }
-
-float calcSum(vector<float>* vect1,vector<float>* vect2);
-float calcSub(vector<float>* vect1,vector<float>* vect2);
 
 #endif 

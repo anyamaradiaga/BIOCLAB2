@@ -14,10 +14,6 @@ namespace PreProcessing{
     class MyProcess {
         public: 
         MyProcess(); 
-        vector<float> get_log_ratio();
-        void set_log_ratio(vector<float> vector1, vector<float> vector2);
-        private:
-        vector<float> log_ratio;
     };
 }
 

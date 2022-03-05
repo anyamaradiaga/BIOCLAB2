@@ -4,35 +4,47 @@
 - Description: ----
 */
 #include "amaradiaga_vector_ops.hpp"
+
+MyVectorSpace::MyOpsClass::MyOpsClass(){
+}
+
+MyVectorSpace::MyOpsClass::MyOpsClass(vector<float>* vect){
+}
+
+MyVectorSpace::MyOpsClass::MyOpsClass(vector<float>*vect1, vector<float>*vect2){
+}
+
+MyVectorSpace::MyOpsClass::MyOpsClass(vector<float>* vect, float k){
+}
+
 //a function that sums all of the outputs of an array
-float MyVector::MyOps::calcSum(vector<float>* vect){
-	float s = 0.0;
+float MyVectorSpace::MyOpsClass::calcSum(vector<float>* vect){
+	float s = 0;
 	int i;
 	for (i = 0; i < sizeof(vect); i++) //going through every row
 	{
 		s += vect-> at(i); // s = s + v(i)
 	}
-	this -> sum = s;
-    //return sum; //shouldn't return
+    return s; 
 }
 
 //a function that subtracts one array from another element by element 
-float MyVector::MyOps::calcSub(vector<float>*vect1, vector<float>*vect2){
-    float p = 0.0;
+vector<float> MyVectorSpace::MyOpsClass::calcSub(vector<float>*vect1, vector<float>*vect2){
+    std::vector<float> p; 
     int i; 
-    for(i=0; i<sizeof(vect1);i++){
-        p = (vect1 -> at(i)) - (vect2 -> at(i));
+    for(i=0; i<vect1 -> size();i++){
+        p.push_back(vect1 -> at(i) - vect2 -> at(i));
     }
-    this -> sub = p; 
+    return p; 
     //return sub; //shouldn't return
 }
 
 //a function that divides all values in an array by a constant
-float MyVector::MyOps::calcDiv(vector<float>* vect, int k){
-    float d = 0.0; 
+vector<float> MyVectorSpace::MyOpsClass::calcDiv(vector<float>* vect, float k){
+    std::vector<float> d; 
     int i; 
-    for(i=0; i<sizeof(vect);i++){
-        d = (vect -> at(i))/k; 
+    for(i=0; i<vect -> size();i++){
+        d.push_back(vect -> at(i)/k); 
     }
-    this -> div = d; 
+    return d; 
 }

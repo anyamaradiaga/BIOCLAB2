@@ -1,5 +1,5 @@
-#Name: Anya Maradiaga
-#Description: Makefile for lab2
+#lab2 makefile 
+
 CC = g++
 SHELL = /bin/bash
 
@@ -19,6 +19,3 @@ k_means.o: amaradiaga_k_means.cpp
 
 clean:
 	rm *.o
-			
-
-
