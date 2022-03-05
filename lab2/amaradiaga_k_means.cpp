@@ -65,8 +65,7 @@ int main(int argc, char** argv){
     kMean::cluster cluster_2("stationary", 0.0);
     kMean::cluster cluster_3("expressed", 0.5);
     /*--------------------------------*/
-
-    float temp;
+    
     while (file1 >> temp) { // fill vector from file
 		data.push_back(temp);
     }
