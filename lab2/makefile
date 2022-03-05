@@ -1,26 +1,24 @@
 #Name: Anya Maradiaga
 #Description: Makefile for lab2
-
 CC = g++
+SHELL = /bin/bash
 
-vector_ops.o: amaradiaga_vector_ops.hpp amaradiaga_vector_ops.cpp
-g++ -c vector_ops $^
+all: pre_process.o vector_ops.o stats.o k_means.o
 
-stats_lab1.o: amaradiga_stats.cpp amaradiaga_stats.hpp amaradiaga_stats_test.cpp
-g++ -c stats_lab1 $^
+vector_ops.o: amaradiaga_vector_ops.cpp
+	$(CC) -c $^
 
-preprocess.o: amaradiaga_pre_processing.cpp amaradiaga_pre_processing.hpp amaradiaga_stats.cpp amaradiaga_stats.hpp amaradiaga_vector_ops.cpp amaradiaga_vector_ops.hpp
-g++ -c preprocess $^
+stats.o: amaradiaga_stats.cpp
+	$(CC) -c $^
 
-cluster.o: amaradiaga_k_means.cpp amaradiaga_k_means.hpp amaradiaga_stats.cpp amaradiaga_stats.hpp amaradiaga_pre_processing.cpp amaradiaga_pre_processing.hpp amaradiaga_vector_ops.cpp amaradiaga_vector_ops.hpp
-g++ -c cluster $^
+pre_process.o: amaradiaga_pre_processing.cpp
+	$(CC) -c $^
 
-all: vector_ops.o stats_lab1.o preprocess.o cluster.o
+k_means.o: amaradiaga_k_means.cpp
+	$(CC) -o run $^
 
 clean:
-rm -f *.o 
-rm -f *.gch
-rm -f all 
+	rm *.o
 			
 
 
