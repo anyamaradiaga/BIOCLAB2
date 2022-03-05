@@ -17,8 +17,8 @@
 #include <iterator>
 #include <vector>
 
-std::ifstream FILE_1, FILE_2; //for the two files
-std::ofstream expressed_file, suppressed_file, stationary_file; //define the output variables for files
+//std::ifstream FILE_1, FILE_2; //for the two files
+//std::ofstream expressed_file, suppressed_file, stationary_file; //define the output variables for files
 
 kMean::cluster::cluster(string nameInput, float meanInput){
     this->name = nameInput;
