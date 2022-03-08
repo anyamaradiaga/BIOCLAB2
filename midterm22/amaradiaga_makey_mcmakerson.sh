@@ -9,18 +9,47 @@ echo $@
 echo "the total number of arguments is:"
 echo $#
 
+userin=$1
+
 #check if directory path exists
-if [ -d "$1" ]             
+if [ userin ]             
 then
-    echo "this path exists"
+    echo "this directory exists"
 else
-    echo "this path doesnt exist"
+    echo "this directory doesnt exist"
 fi
 
-IFS=" " read -r targets; do
-    data[numrows] = $targets; 
-    ((num_rows=num_rows+1))
-done < "Straightforward/dandelion.cpp"
+touch makefile
 
-#we want to read variables that are between spaces but we also want to ignore "<<" and ":"
+echo "CC=g++" > makefile
+
+cppfiles=($(grep -rl --include=*.cpp ./ | cut -d '/' -f2))
+
+hppfiles=($(grep -rl --include=*.cpp ./ | cut -d '/' -f2 | sed 's/.cpp/.hpp/g'))
+
+#check main
+if grep -Rl 'main' $f; then
+    echo -e "main\n"
+else
+    echo -e "nooo main\n"
+fi
+
+declare -a exes=($(grep -rl --include=\*.cpp ./ | cut -d '/' -f2 | sed 's/.cpp/.o/g' ))
+
+exe=($(grep -rl --include=*.cpp ./ | cut -d '/' -f2 | cut -d '.' -f1 | sed 's/.cpp/.o/g'))
+cppo=($(grep -rl --include=*.cpp ./ | cut -d '/' -f2 | cut -d '.' -f1))
+hppo=($(grep -rl --include=*.cpp ./ | cut -d '/' -f2 | cut -d '.' -f1 ))
+
+length= echo ${#exes[@]}
+cpplength= echo ${#cppfiles[@]}
+hpplength= echo ${#hppfiles[@]}
+
+for((i=0; i<length; ++i)); do
+  for((j=0; j<26; ++j)); do
+    if [[ ${exe[i]} == ${cppo[j]} ]]; then
+
+      echo "${exes[i]}" >> makefile
+    fi
+  done
+done
 
