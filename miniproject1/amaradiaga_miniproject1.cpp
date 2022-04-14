@@ -20,40 +20,31 @@ int main(int argc, char** argv){
     
     //opening file
     file.open(filename);
-
     if(file.is_open()){
         std::istream_iterator<float> start(file), end; //data from file
         vector<float> data(start, end);
+        StatsSpace::StatsClass stats_data; //stats data object
+        stats_data.calcMax(data); //call max function
+        float max = stats_data.getMax(); //get max
+        cout<<"maximum value is: "<< max <<"\n";
 
-    if(data[0]==NULL){ //error checking
-        std::cout<<"El archivo esta vacío\n";
-        return 1;
-    }
+        stats_data.calcMin(data); //call min function
+        float min = stats_data.getMin(); //get min
+        cout<<"minumum value is: "<< min <<"\n";
 
-    StatsSpace::StatsClass stats_data; //stats data object
+        stats_data.calcMean(data); //call mean function
+        float mean = stats_data.getMean(); //get mean
+        cout<<"average value is: "<< mean <<"\n";
 
-    stats_data.calcMax(data); //call max function
-    float max = stats_data.getMax(); //get max
-    cout<<"maximum value is: "<< max <<"\n";
-
-    stats_data.calcMin(data); //call min function
-    float min = stats_data.getMin(); //get min
-    cout<<"minumum value is: "<< min <<"\n";
-
-    stats_data.calcMean(data); //call mean function
-    float mean = stats_data.getMean(); //get mean
-    cout<<"average value is: "<< mean <<"\n";
-
-    stats_data.calcSd(data); //call standard deviation function
-    float stdv = stats_data.getSd(); //get standard dev.
-    cout<<"standard deviation value is: "<< stdv <<"\n";
+        stats_data.calcSd(data); //call standard deviation function
+        float stdv = stats_data.getSd(); //get standard dev.
+        cout<<"standard deviation value is: "<< stdv <<"\n";
     }
 
     else{//error check
         cout<<"El archivo no pudo ser abierto\n";
         return 2;
     }
-
     return 0;
 }
 

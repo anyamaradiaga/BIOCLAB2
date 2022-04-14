@@ -10,8 +10,9 @@ amaradiaga_stats.o: amaradiaga_stats.cpp amaradiaga_stats.hpp
 	$(CC) $(CFLAGS) $^ -lm
 
 libstats.so: amaradiaga_stats.o 
+	$(CC) -shared $^ -o $@
 
-all: amaradiaga_stats.o libstats.o
+all: libstats.o
 
 clean:
 	rm -f *.o
