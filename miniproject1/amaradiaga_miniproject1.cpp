@@ -30,22 +30,22 @@ int main(int argc, char** argv){
         return 1;
     }
 
-    StatsSpace::StatsClass stats_data;
+    StatsSpace::StatsClass stats_data; //stats data object
 
-    stats_data.calcMax(data);
-    float max = stats_data.getMax();
+    stats_data.calcMax(data); //call max function
+    float max = stats_data.getMax(); //get max
     cout<<"maximum value is: "<< max <<"\n";
 
-    stats_data.calcMin(data);
-    float min = stats_data.getMin();
+    stats_data.calcMin(data); //call min function
+    float min = stats_data.getMin(); //get min
     cout<<"minumum value is: "<< min <<"\n";
 
-    stats_data.calcMean(data);
-    float mean = stats_data.getMean();
+    stats_data.calcMean(data); //call mean function
+    float mean = stats_data.getMean(); //get mean
     cout<<"average value is: "<< mean <<"\n";
 
-    stats_data.calcSd(data);
-    float stdv = stats_data.getSd();
+    stats_data.calcSd(data); //call standard deviation function
+    float stdv = stats_data.getSd(); //get standard dev.
     cout<<"standard deviation value is: "<< stdv <<"\n";
     }
 
