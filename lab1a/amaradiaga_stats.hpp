@@ -22,16 +22,16 @@ using namespace std; //used for cout, min, max arrays...
 
 //max function definition. 
 //double calcMax(vector<double>& vect);
-namespace MySpace{
-    class MyClass{
+namespace StatsSpace{
+    class StatsClass{
         public: 
-            float calcMean(vector<float> vect);
+            void calcMean(vector<float> vect);
             float getMean();
-            float calcMin(vector<float>* vect);
+            void calcMin(vector<float> vect);
             float getMin();
-            float calcMax(vector<float>* vect);
+            void calcMax(vector<float> vect);
             float getMax();
-            float calcSd(vector<float>* vect);
+            void calcSd(vector<float> vect);
             float getSd();
             void calcHist(vector<float> vect);
         private:
@@ -45,15 +45,5 @@ namespace MySpace{
 
 };
 }
-
-//min function definition.
-float calcMin(vector<float>* vect);
-//mean function definition. 
-float calcMean(vector<float>* vect);
-//standard deviation function definition.
-float calcSd(vector<float>* vect);
-//histogram function definition
-float calcHist(vector<float>* vect);
-
 
 #endif 

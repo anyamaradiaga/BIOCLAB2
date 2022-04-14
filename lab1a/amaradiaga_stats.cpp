@@ -8,8 +8,9 @@ Description:
 //namespace class
 //then constructor
 //calculating the maximum
+using namespace StatsSpace; 
 
-float MySpace::MyClass::calcMean(vector<float> vect){
+void StatsSpace::StatsClass::calcMean(vector<float> vect){
     int index= vect.size();     
     int i=0;
     float sum=0;
@@ -21,49 +22,45 @@ float MySpace::MyClass::calcMean(vector<float> vect){
     this->mean=answer;        
 
 }
-float MySpace::MyClass::getMean(){
+float StatsSpace::StatsClass::getMean(){
 	return (this-> mean);
 }
 
-float MySpace::MyClass::calcMax(vector<float>* vect){
-	int i;
-	float m = vect->at(0);
-	for (i = 0; i < sizeof(vect); i++) 
-	{
-		if (vect-> at(i) > m)
-		{
-			m = vect-> at(i);
+void StatsSpace::StatsClass::calcMax(vector<float> vect){
+    int i=0;
+    float m=0;
+	while(i<vect[i]){
+		if (vect[i]>m ){
+			m = vect[i];
 		}
+        else{}
+        i++;
 	}
-	this -> max = m; 
-	return m; 
+	this -> max = m;  
 }
 
-float MySpace::MyClass::getMax(){
+float StatsSpace::StatsClass::getMax(){
 	return (this-> max);
 }
 
-float MySpace::MyClass::calcMin(vector<float>* vect){
-	int i;
-	float min_calc = vect->at(0);
-	for (i = 0; i < sizeof(vect); i++) //going through every row
-	{
-		if (vect-> at(i) < min_calc)
-		{
-			min_calc = vect-> at(i);
+void StatsSpace::StatsClass::calcMin(vector<float> vect){
+    int i=0;
+    float m=0;
+	while(i<vect[i]){
+		if (vect[i]<m ){
+			m = vect[i];
 		}
+        else{}
+        i++;
 	}
-	this -> min = min_calc; 
-	return min_calc; 
+	this -> min = m;  
 }
 
-float MySpace::MyClass::getMin(){
+float StatsSpace::StatsClass::getMin(){
 	return (this-> min);
 }
 
-
-
-void MySpace::MyClass::calcHist(vector<float> vect){
+void StatsSpace::StatsClass::calcHist(vector<float> vect){
 
     float maximum = 0, minimum = 10000;
     int j = 0;
