@@ -57,7 +57,7 @@ for d in midterm22/*/ ; do
                     main_file="${myFile::-4}"
                     main_array+=("${main_file}")
                 else    
-                    ignore_main+=("${myFile}")
+                    temp+=("${myFile}")
                     #echo "${myFile}"
                 fi 
             fi
@@ -76,7 +76,7 @@ done
         #checking whether the file is a cpp file
         if [[ $myFile == *.cpp ]]; then
             # echo $myFile
-            if [[ ! " ${ignore_main[*]} " =~ " $myFile " ]]; then
+            if [[ ! " ${temp[*]} " =~ " $myFile " ]]; then
             myFile="${myFile::-4}"
             myFile="${myFile}.o"
             #echo $myFile
