@@ -72,10 +72,10 @@ done
     exes+=("${folder_name}_exec")
     for p in $d* ; do
         myFile="${p#$DIR_PATH}"
-        # echo $myFile
+        #echo $myFile
         #checking whether the file is a cpp file
         if [[ $myFile == *.cpp ]]; then
-            # echo $myFile
+            #echo $myFile
             if [[ ! " ${temp[*]} " =~ " $myFile " ]]; then
             myFile="${myFile::-4}"
             myFile="${myFile}.o"
@@ -99,7 +99,7 @@ done
 printf "\n" >> $makefile
 echo "
 clean:" >> $makefile
-for d in midterm2022/*/ ; do
+for d in midterm22/*/ ; do
     folder_name="${d#$DIR_PATH}"
     folder_name="${folder_name::-1}"
     printf "\t" >> $makefile
