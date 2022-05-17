@@ -88,14 +88,14 @@ done
     echo "\$(CC) -o \$@ \$^" >> $makefile
 done
 
-# Make all
+#ALL
 printf "\n" >> $makefile
 echo -n "all:" >> $makefile
 for value in "${exes[@]}"
 do
      echo -n " $value" >> $makefile
 done
-# Make the clean part of make file
+#CLEAN
 printf "\n" >> $makefile
 echo "
 clean:" >> $makefile
